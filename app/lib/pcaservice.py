@@ -47,7 +47,7 @@ class Pca_service():
         print("==================== START PCA ===============================")
         from sklearn.decomposition import PCA
         test_diff = datatemp.reshape((self.nt,self.nlat*self.nlon))
-        print(test_diff.shape)
+        # print(test_diff.shape)
         pca = PCA(n_components=n_com)
         pca.fit(test_diff)
         principalComponents = pca.transform(test_diff)
@@ -67,11 +67,11 @@ class Pca_service():
 
     #     return pca_pc, eof_final, pca_va_ratio
 
-    def getPCA_service(self, com):
-        data = self.__gendata()
+    def getPCA_service(self, com, month=None):
+        data = self.__gendata(month)
         self.nt, self.nlat, self.nlon = data.shape 
         data[np.isnan(data)] = 0
-        print(f"data : {data.shape}")
+        # print(f"data : {data.shape}")
         pca_pc, pca_eofs, pca_va_ratio = self.__pca_fn(data, com)
         eof_final = []
         for i in range(0, com):
@@ -109,7 +109,7 @@ class Pca_service():
 
     def getVarianceMap(self, month=None):
         start = time.time()
-        print("getVariance")
+        # print("getVariance")
         tempData = self.resultFormMongo
         tempAry = []
 
@@ -125,7 +125,7 @@ class Pca_service():
                 tempAry.append(i['data'][month])
 
         tempAry = np.array(tempAry, dtype=np.float)
-        print(f"shape : {tempAry.shape}")
+        # print(f"shape : {tempAry.shape}")
         tempAry = np.nanvar(tempAry, axis=0)
         tempAry = np.array(tempAry, dtype=np.float64)
         return tempAry

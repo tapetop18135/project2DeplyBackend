@@ -96,19 +96,96 @@ compare = {
 ########################### GHCNDEX ###########################
 ########################### GHCNDEX ###########################
 ########################### GHCNDEX ###########################
-basepath = "../dataset/ghcndex_current/"
-files = os.listdir(basepath)
-index = 0
-month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+# basepath = "../dataset/ghcndex_current/"
+# files = os.listdir(basepath)
+# index = 0
+# month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 
     
+# for i in files:
+#     name = i.split(".")
+#     collect = name[0].split("_")[1]
+#     print(collect)
+#     dataset = 'ghcndex'
+#     data, aryLatLon = get_data(f"{basepath}{i}")
+#     if(collect in compare):
+#         detail = {
+#             "index_name": collect, # TXx
+#             "short_name": compare[collect][0], # Max Tmax
+#             "type_measure": compare[collect][1], # temperature
+#             "method": compare[collect][2], # intensity
+#             "unit": compare[collect][3], # °C def
+#             "description": compare[collect][4], # °C def
+#             "dataset": dataset, # ghcendex
+#         }
+#     else:
+#         detail = {
+#             "index_name": collect, # TXx
+#             "short_name": None, # Max Tmax
+#             "type_measure": None, # temperature
+#             "method": None, # intensity
+#             "unit": None, # °C def
+#             "description": None, # °C def
+#             "dataset": dataset, # ghcendex
+#         }
+#     insertTomongo(data,f'ghcndex_{collect}', detail, aryLatLon, 1951)
+#     index+=1
+
+
+# ########################### HADEX2 ###########################
+# ########################### HADEX2 ###########################
+# ########################### HADEX2 ###########################
+# basepath = "../dataset/hadex2_current/"
+# files = os.listdir(basepath)
+# index = 0
+# month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    
+# for i in files:
+#     name = i.split(".")
+#     collect = name[0].split("_")[1]
+#     print(collect)
+#     dataset = 'hadex2'
+#     data, aryLatLon = get_data(f"{basepath}{i}")
+#     if(collect in compare):
+#         detail = {
+#             "index_name": collect, # TXx
+#             "short_name": compare[collect][0], # Max Tmax
+#             "type_measure": compare[collect][1], # temperature
+#             "method": compare[collect][2], # intensity
+#             "unit": compare[collect][3], # °C def
+#             "description": compare[collect][4], # °C def
+#             "dataset": dataset, # ghcendex
+#         }
+#     else:
+#         detail = {
+#             "index_name": collect, # TXx
+#             "short_name": None, # Max Tmax
+#             "type_measure": None, # temperature
+#             "method": None, # intensity
+#             "unit": None, # °C def
+#             "description": None, # °C def
+#             "dataset": dataset, # ghcendex
+#         }
+#     insertTomongo(data,f'hadex2_{collect}', detail, aryLatLon, 1901)
+#     index+=1
+
+###################################################################
+basepath = "../dataset/netCDF4/"
+files = os.listdir(basepath)
+index = 0
+month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 for i in files:
     name = i.split(".")
-    collect = name[0].split("_")[1]
-    print(collect)
-    dataset = 'ghcndex'
+    # print(name)
+    collect = name[0].split("_")[2]
+    dataset = f'{name[0].split("_")[0]}_{name[0].split("_")[1]}'
+    # print(collect)
+    # print(dataset)
     data, aryLatLon = get_data(f"{basepath}{i}")
+    # print(data)
+    # print(aryLatLon)
+    # break
     if(collect in compare):
         detail = {
             "index_name": collect, # TXx
@@ -129,43 +206,37 @@ for i in files:
             "description": None, # °C def
             "dataset": dataset, # ghcendex
         }
-    insertTomongo(data,f'ghcndex_{collect}', detail, aryLatLon, 1951)
-    index+=1
-
-
-########################### HADEX2 ###########################
-########################### HADEX2 ###########################
-########################### HADEX2 ###########################
-basepath = "../dataset/hadex2_current/"
-files = os.listdir(basepath)
-index = 0
-month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    # print(detail)
     
-for i in files:
-    name = i.split(".")
-    collect = name[0].split("_")[1]
-    print(collect)
-    dataset = 'hadex2'
-    data, aryLatLon = get_data(f"{basepath}{i}")
-    if(collect in compare):
-        detail = {
-            "index_name": collect, # TXx
-            "short_name": compare[collect][0], # Max Tmax
-            "type_measure": compare[collect][1], # temperature
-            "method": compare[collect][2], # intensity
-            "unit": compare[collect][3], # °C def
-            "description": compare[collect][4], # °C def
-            "dataset": dataset, # ghcendex
-        }
-    else:
-        detail = {
-            "index_name": collect, # TXx
-            "short_name": None, # Max Tmax
-            "type_measure": None, # temperature
-            "method": None, # intensity
-            "unit": None, # °C def
-            "description": None, # °C def
-            "dataset": dataset, # ghcendex
-        }
-    insertTomongo(data,f'hadex2_{collect}', detail, aryLatLon, 1901)
-    index+=1
+    # break
+    insertTomongo(data,f'{dataset}_{collect}', detail, aryLatLon, 1951)
+    # break
+
+# for i in files:
+#     name = i.split(".")
+#     collect = name[0].split("_")[1]
+#     print(collect)
+#     dataset = 'ghcndex'
+#     data, aryLatLon = get_data(f"{basepath}{i}")
+#     if(collect in compare):
+#         detail = {
+#             "index_name": collect, # TXx
+#             "short_name": compare[collect][0], # Max Tmax
+#             "type_measure": compare[collect][1], # temperature
+#             "method": compare[collect][2], # intensity
+#             "unit": compare[collect][3], # °C def
+#             "description": compare[collect][4], # °C def
+#             "dataset": dataset, # ghcendex
+#         }
+#     else:
+#         detail = {
+#             "index_name": collect, # TXx
+#             "short_name": None, # Max Tmax
+#             "type_measure": None, # temperature
+#             "method": None, # intensity
+#             "unit": None, # °C def
+#             "description": None, # °C def
+#             "dataset": dataset, # ghcendex
+#         }
+#     insertTomongo(data,f'ghcndex_{collect}', detail, aryLatLon, 1951)
+#     index+=1

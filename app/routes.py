@@ -161,9 +161,20 @@ def getmapPCA(type_dataset, yearInit, yearEnd, type_index):
         dataVar = objVar.getVarianceMap()
         dataVar[np.isnan(dataVar)] = -99.99
     except:
-        pca_pc, pca_va_ratio, ratioX = np.array([[],[],[]])
-        date = []
-        dataVar = np.array([])
+        obj = Pca_service(ary, collection, month_IE[0], month_IE[1])
+        pca_pc, pca_eofs, pca_va_ratio =  obj.getPCA_service(comp, month=0)
+        ratioX = np.linspace(1, comp, num=comp)
+        date = obj.date
+        print(pca_va_ratio.shape)
+        print(ratioX)
+
+        objVar = Pca_service(ary, collection, month_IE[0], month_IE[1])
+        dataVar = objVar.getVarianceMap(month=0)
+        dataVar[np.isnan(dataVar)] = -99.99
+
+        # pca_pc, pca_va_ratio, ratioX = np.array([[],[],[]])
+        # date = []
+        # dataVar = np.array([])
     
     
     # dataM[np.isnan(dataM)] = -99.99
