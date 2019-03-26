@@ -24,6 +24,10 @@ class MongoDB_lc():
         )
         return result
 
+    def mongo_findDataset(self, dataset):
+        result = self.col.find({dataset : { "$exists" : True } })
+        return result
+
     def mongo_findDetail(self, keyfind):
         result = self.col.find(
             { "key__" : keyfind }
@@ -33,9 +37,12 @@ class MongoDB_lc():
         return detail
     
     def mongo_findDetail(self, keyfind):
-        result = self.col.find(
-            { "key__" : keyfind }
+        result = self.col.find({"detail" : { "$exists" : True }}
         )
+        
+        # result = self.col.find(
+        #     { "key__" : keyfind }
+        # )
         for re in result:
             detail = re['detail']
             lat = re['lat']

@@ -7,6 +7,7 @@ import warnings
 class SelectCus_service():
 
     def __init__(self, aryYear, collection, month_init, month_end):
+        print("SSSSSSSSSSSSSS",collection)
         self.aryYear = aryYear
         self.col = collection
         self.month_init = month_init
@@ -19,6 +20,7 @@ class SelectCus_service():
         self.resultFormMongo = self.obj.mongo_find(self.aryYear)
 
     def getAverageGraphCus(self, custom , month_state = None):
+        # print(custom)
         start = time.time()
         print("getAverageGraphCus")
         tempData = self.resultFormMongo
@@ -58,6 +60,7 @@ class SelectCus_service():
 
         tempAry = np.array(tempAry)
         print(time.time() - start)
+
         return tempAry, date
 
     def getSeasonalCus(self, custom):

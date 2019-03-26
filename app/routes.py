@@ -6,6 +6,7 @@ from .lib.mongoDB import MongoDB_lc
 import json
 import pandas as pd
 from .lib.linearRegressGen import Linear_regression
+from .lib.classRegridsNew import Regrids
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -29,10 +30,42 @@ def getDetail(collection):
     objDB.collection(collection)
     return objDB.mongo_findDetail(collection)
 
+def checkSize(arr):
+    print("incheck")
+    print(arr)
+    if arr[0] * arr[1] > 20000:
+        return True
+    return False
+
 @app.route('/')
 @app.route('/index')
 def index():
     return "Hello, World!"
+
+@app.route('/api/getDataset')
+def getDataset():
+    objDB= MongoDB_lc()
+    objDB.collection("dataset")
+    result = objDB.mongo_findDataset("haveDataset")
+    print(result)
+    for data in result:
+        r = data["haveDataset"]
+    return jsonify({
+        "datasets" : r
+    })
+
+@app.route('/api/getdetailDataset/<dataset>')
+def getdetailDataset(dataset):
+    objDB= MongoDB_lc()
+    objDB.collection("dataset")
+    result = objDB.mongo_findDataset(dataset)
+    # print(result)
+    for data in result:
+        r = data[dataset]
+    return jsonify({
+        dataset : r
+    })
+
 
 @app.route('/api/getgeocountry')
 def getGeojson():
@@ -63,8 +96,19 @@ def getmapAverage(type_dataset, yearInit, yearEnd, type_index):
     #             count += 1
 
     # print(count)
-
+    # print("ssssssssVCVVVVVVVVVVVVVVVVVV",dataM.shape)
     deatail = getDetail(collection)
+    if(checkSize(dataM.shape)):
+        regridOBJ = Regrids()
+        dataM = regridOBJ.regrids(dataM)
+        ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
+        deatail["lat_list"] = ulatlon["lat"].tolist()
+        deatail["lon_list"] = ulatlon["lon"].tolist()
+
+    # print(deatail["lat_list"])
+    # print(deatail["lon_list"])
+    # print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+    # print(len(deatail["lat_list"]))
     return jsonify(
         {
             "detail": deatail,
@@ -85,14 +129,14 @@ def getSeasonalandAVG(type_dataset, yearInit, yearEnd, type_index):
     # SERVICE GET Average Graph Ann
     a = Average_service(ary, collection, month_IE[0], month_IE[1])
     dataA, year  = a.getAverageGraph(0)
-    
+   
     # regAVG_ann = Linear_regression(dataA)
     # dataTrend_ann = regAVG_ann.predict_linear()
     
     # SERVICE GET Seasonal Graph
     b = Average_service(ary, collection, month_IE[0], month_IE[1])
     dataS = b.getSeasonal()
-    
+    print(dataS)
     # SERVICE GET Average Graph all
     c = Average_service(ary, collection, month_IE[0], month_IE[1])
     dataAll, yearAll  = c.getAverageGraph()
@@ -178,8 +222,29 @@ def getmapPCA(type_dataset, yearInit, yearEnd, type_index):
     
     
     # dataM[np.isnan(dataM)] = -99.99
-
+    pca_eofs = np.array(pca_eofs)
     deatail = getDetail(collection)
+    pca_arr = []
+    if(checkSize(pca_eofs[0].shape)):
+        regridOBJ = Regrids()
+        for i in range(6):
+            pca_arr.append(regridOBJ.regrids(pca_eofs[i]).tolist())
+        print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+
+        dataVar = regridOBJ.regrids(dataVar)
+        # t = np.array(pca_arr)
+        # print(t.shape)
+        # print(len(pca_arr[0]))
+        pca_eofs = pca_arr
+        ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
+        deatail["lat_list"] = ulatlon["lat"].tolist()
+        deatail["lon_list"] = ulatlon["lon"].tolist()
+
+
+        # print(pca_eofs)
+    else:
+        pca_eofs = pca_eofs.tolist()    
+
     return jsonify(
         {
             "detail": deatail,
@@ -219,6 +284,26 @@ def getmapHypoTrend(type_dataset, yearInit, yearEnd, type_index):
         collectionDB = f"{type_dataset}_{type_index}"
         obj = Trend_service(ary, collectionDB, month_IE[0], month_IE[1])
         dataRaw = obj.getData(0)
+        print("************************************************************")
+        arr = []
+        regridOBJ = Regrids()
+        for i in range(dataRaw.shape[0]):
+            
+            arr.append(regridOBJ.regrids(dataRaw[i]))
+        arr = np.array(arr)
+        print(arr.shape)
+        print("tempR", arr.shape)
+        if checkSize(tempR.shape):
+            regridOBJ = Regrids()
+            ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
+            deatail["lat_list"] = ulatlon["lat"].tolist()
+            deatail["lon_list"] = ulatlon["lon"].tolist()
+            print("SSSSS")
+        # ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
+        # deatail["lat_list"] = ulatlon["lat"].tolist()
+        # deatail["lon_list"] = ulatlon["lon"].tolist()
+
+        print("////////////////////////////////////////////////////////////")
         start = time.time()
         tempR, hypoLat = obj.trendAndHypo(dataRaw)
         print(time.time() - start)
@@ -227,6 +312,13 @@ def getmapHypoTrend(type_dataset, yearInit, yearEnd, type_index):
         tempR[tempR == 0] = -99.99
         obj.insertTomongo(tempR.tolist(),hypoLat.tolist(), collectionDB)
     else:
+        if checkSize(tempR.shape):
+            regridOBJ = Regrids()
+            ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
+            deatail["lat_list"] = ulatlon["lat"].tolist()
+            deatail["lon_list"] = ulatlon["lon"].tolist()
+            print("SSSSS")
+            
         print("warning :Have data trend in mongo")
         tempR[np.isnan(tempR)] = -99.99
     
@@ -257,9 +349,11 @@ def getSlectGraph():
         type_dataset = data['type_dataset']
         yearInit = data['yearInit']
         yearEnd = data['yearEnd']
-        type_index = data['type_index']
+        type_index = data['type_index'].lower()
         custom = data['custom']
         print("////////////////////////////////////")
+        
+        print(data)
         # print(custom)
         print("////////////////////////////////////")
         print(f"getmapAverage : {type_dataset, yearInit, yearEnd, type_index}")
@@ -268,6 +362,9 @@ def getSlectGraph():
         collection = f"{type_dataset}_{type_index}"
 
         obj = SelectCus_service(ary, collection, month_IE[0], month_IE[1])
+        # print(obj)
+        # for i in obj:
+        #     print(i)
         dataAll, yearAll  = obj.getAverageGraphCus(custom)
         tempMedian = np.nanmedian(dataAll)
         dataAll[np.isnan(dataAll)] = tempMedian
@@ -277,6 +374,7 @@ def getSlectGraph():
         tempMedian = np.nanmedian(dataA)
         dataA[np.isnan(dataA)] = tempMedian
 
+        print(dataA)
         print("AAAAAAAAAAAAA")
         obj2 = SelectCus_service(ary, collection, month_IE[0], month_IE[1])
         dataS  = obj2.getSeasonalCus(custom)
