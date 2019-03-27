@@ -98,167 +98,167 @@ compare = {
     "R10mm":["Heavy precipitation days","precipitation", "Frequency", "days", "Annual number of days when precipitation ≥ 10 mm"],
     "R20mm":["Very heavy precipitation days","precipitation", "Frequency", "days", "Annual number of days when precipitation ≥ 20 mm"],
 }
-########################## GHCNDEX ###########################
-########################## GHCNDEX ###########################
-########################## GHCNDEX ###########################
-# basepath = "../dataset/ghcndex_current/"
-# files = os.listdir(basepath)
-# index = 0
-# month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+######################### GHCNDEX ###########################
+######################### GHCNDEX ###########################
+######################### GHCNDEX ###########################
+basepath = "../dataset/ghcndex_current/"
+files = os.listdir(basepath)
+index = 0
+month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
-# arr1ghcndex = []
-# arr2hadex2 = []
+arr1ghcndex = []
+arr2hadex2 = []
 
-# for i in files:
-#     name = i.split(".")
-#     collect = name[0].split("_")[1]
-#     print(collect)
-#     dataset = 'ghcndex'
-#     data, aryLatLon = get_data(f"{basepath}{i}")
-#     if(collect in compare):
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": compare[collect][0], # Max Tmax
-#             "type_measure": compare[collect][1], # temperature
-#             "method": compare[collect][2], # intensity
-#             "unit": compare[collect][3], # °C def
-#             "description": compare[collect][4], # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     else:
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": None, # Max Tmax
-#             "type_measure": None, # temperature
-#             "method": None, # intensity
-#             "unit": None, # °C def
-#             "description": None, # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     insertTomongo(data,f'ghcndex_{collect.lower()}', detail, aryLatLon, 1951)
-#     arr1ghcndex.append(collect.lower())
-#     index+=1
+for i in files:
+    name = i.split(".")
+    collect = name[0].split("_")[1]
+    print(collect)
+    dataset = 'ghcndex'
+    data, aryLatLon = get_data(f"{basepath}{i}")
+    if(collect in compare):
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": compare[collect][0], # Max Tmax
+            "type_measure": compare[collect][1], # temperature
+            "method": compare[collect][2], # intensity
+            "unit": compare[collect][3], # °C def
+            "description": compare[collect][4], # °C def
+            "dataset": dataset, # ghcendex
+        }
+    else:
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": None, # Max Tmax
+            "type_measure": None, # temperature
+            "method": None, # intensity
+            "unit": None, # °C def
+            "description": None, # °C def
+            "dataset": dataset, # ghcendex
+        }
+    insertTomongo(data,f'ghcndex_{collect.lower()}', detail, aryLatLon, 1951)
+    arr1ghcndex.append(collect.lower())
+    index+=1
 
 
-# ########################### HADEX2 ###########################
-# ########################### HADEX2 ###########################
-# ########################### HADEX2 ###########################
-# basepath = "../dataset/hadex2_current/"
-# files = os.listdir(basepath)
-# index = 0
-# month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+########################### HADEX2 ###########################
+########################### HADEX2 ###########################
+########################### HADEX2 ###########################
+basepath = "../dataset/hadex2_current/"
+files = os.listdir(basepath)
+index = 0
+month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     
-# for i in files:
-#     name = i.split(".")
-#     collect = name[0].split("_")[1]
-#     print(collect)
-#     dataset = 'hadex2'
-#     data, aryLatLon = get_data(f"{basepath}{i}")
-#     if(collect in compare):
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": compare[collect][0], # Max Tmax
-#             "type_measure": compare[collect][1], # temperature
-#             "method": compare[collect][2], # intensity
-#             "unit": compare[collect][3], # °C def
-#             "description": compare[collect][4], # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     else:
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": None, # Max Tmax
-#             "type_measure": None, # temperature
-#             "method": None, # intensity
-#             "unit": None, # °C def
-#             "description": None, # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     insertTomongo(data,f'hadex2_{collect.lower()}', detail, aryLatLon, 1901)
-#     arr2hadex2.append(collect.lower())
-#     index+=1
-# print(":::::::::::::::::::::::::::::::::::::::::")
-# print(arr1ghcndex)
-# print("*---------------------------------------*")
-# print(arr2hadex2)
+for i in files:
+    name = i.split(".")
+    collect = name[0].split("_")[1]
+    print(collect)
+    dataset = 'hadex2'
+    data, aryLatLon = get_data(f"{basepath}{i}")
+    if(collect in compare):
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": compare[collect][0], # Max Tmax
+            "type_measure": compare[collect][1], # temperature
+            "method": compare[collect][2], # intensity
+            "unit": compare[collect][3], # °C def
+            "description": compare[collect][4], # °C def
+            "dataset": dataset, # ghcendex
+        }
+    else:
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": None, # Max Tmax
+            "type_measure": None, # temperature
+            "method": None, # intensity
+            "unit": None, # °C def
+            "description": None, # °C def
+            "dataset": dataset, # ghcendex
+        }
+    insertTomongo(data,f'hadex2_{collect.lower()}', detail, aryLatLon, 1901)
+    arr2hadex2.append(collect.lower())
+    index+=1
+print(":::::::::::::::::::::::::::::::::::::::::")
+print(arr1ghcndex)
+print("*---------------------------------------*")
+print(arr2hadex2)
 
-###################################################################
-# basepath = "../dataset/netCDF4/"
-# files = os.listdir(basepath)
-# index = 0
-# month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-# for i in files:
-#     name = i.split(".")
-#     # print(name)
-#     collect = name[0].split("_")[2]
-#     dataset = f'{name[0].split("_")[0]}_{name[0].split("_")[1]}'
-#     # print(collect)
-#     # print(dataset)
-#     data, aryLatLon = get_data(f"{basepath}{i}")
-#     # print(data)
-#     # print(aryLatLon)
-#     # break
-#     if(collect in compare):
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": compare[collect][0], # Max Tmax
-#             "type_measure": compare[collect][1], # temperature
-#             "method": compare[collect][2], # intensity
-#             "unit": compare[collect][3], # °C def
-#             "description": compare[collect][4], # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     else:
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": None, # Max Tmax
-#             "type_measure": None, # temperature
-#             "method": None, # intensity
-#             "unit": None, # °C def
-#             "description": None, # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     # print(detail)
+##################################################################
+basepath = "../dataset/netCDF4/"
+files = os.listdir(basepath)
+index = 0
+month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+for i in files:
+    name = i.split(".")
+    # print(name)
+    collect = name[0].split("_")[2]
+    dataset = f'{name[0].split("_")[0]}_{name[0].split("_")[1]}'
+    # print(collect)
+    # print(dataset)
+    data, aryLatLon = get_data(f"{basepath}{i}")
+    # print(data)
+    # print(aryLatLon)
+    # break
+    if(collect in compare):
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": compare[collect][0], # Max Tmax
+            "type_measure": compare[collect][1], # temperature
+            "method": compare[collect][2], # intensity
+            "unit": compare[collect][3], # °C def
+            "description": compare[collect][4], # °C def
+            "dataset": dataset, # ghcendex
+        }
+    else:
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": None, # Max Tmax
+            "type_measure": None, # temperature
+            "method": None, # intensity
+            "unit": None, # °C def
+            "description": None, # °C def
+            "dataset": dataset, # ghcendex
+        }
+    # print(detail)
     
-#     # break
-#     insertTomongo(data,f'{dataset.lower()}_{collect.lower()}', detail, aryLatLon, 1970)
-#     # break
+    # break
+    insertTomongo(data,f'{dataset.lower()}_{collect.lower()}', detail, aryLatLon, 1970)
+    # break
 
-############################### TABLE ##########################
+############################## TABLE ##########################
 
-# a = MongoDB_lc()
-# a.collection("dataset")
-# a.mongo_insert(
-#     [
-#         {"haveDataset": ["ghcndex", "hadex2", "ecearth_rcp45", "ecearth_rcp85", "mpi_rcp45", "mpi_rcp85"] },
-#     {
-#         "ghcndex": {"start": 1951, "stop": 2017,
-#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95pt', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-#         }
-#     },
-#     {
-#         "hadex2": {"start": 1951, "stop": 2017,
-#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-#         }
-#     },
-#     {
-#         "ecearth_rcp45": {"start": 1970, "stop": 2099,
-#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-#         }
-#     },
-#     {
-#         "ecearth_rcp85": {"start": 1970, "stop": 2099,
-#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-#         }
-#     },
-#     {
-#         "mpi_rcp45":{"start": 1970, "stop": 2099,
-#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-#         }
-#     },
-#     {
-#         "mpi_rcp85": {"start": 1970, "stop": 2099,
-#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-#         }
-#     }]
-#     )
+a = MongoDB_lc()
+a.collection("dataset")
+a.mongo_insert(
+    [
+        {"haveDataset": ["ghcndex", "hadex2", "ecearth_rcp45", "ecearth_rcp85", "mpi_rcp45", "mpi_rcp85"] },
+    {
+        "ghcndex": {"start": 1951, "stop": 2017,
+        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95pt', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+        }
+    },
+    {
+        "hadex2": {"start": 1951, "stop": 2017,
+        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+        }
+    },
+    {
+        "ecearth_rcp45": {"start": 1970, "stop": 2099,
+        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+        }
+    },
+    {
+        "ecearth_rcp85": {"start": 1970, "stop": 2099,
+        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+        }
+    },
+    {
+        "mpi_rcp45":{"start": 1970, "stop": 2099,
+        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+        }
+    },
+    {
+        "mpi_rcp85": {"start": 1970, "stop": 2099,
+        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+        }
+    }]
+    )

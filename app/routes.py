@@ -293,7 +293,7 @@ def getmapHypoTrend(type_dataset, yearInit, yearEnd, type_index):
         arr = np.array(arr)
         print(arr.shape)
         print("tempR", arr.shape)
-        if checkSize(tempR.shape):
+        if checkSize([arr.shape[1], arr.shape[2]]):
             regridOBJ = Regrids()
             ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
             deatail["lat_list"] = ulatlon["lat"].tolist()
