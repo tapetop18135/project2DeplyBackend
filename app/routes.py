@@ -7,6 +7,7 @@ import json
 import pandas as pd
 from .lib.linearRegressGen import Linear_regression
 from .lib.classRegridsNew import Regrids
+from .lib.classGetMask import MaskFromText
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -99,8 +100,20 @@ def getmapAverage(type_dataset, yearInit, yearEnd, type_index):
     # print("ssssssssVCVVVVVVVVVVVVVVVVVV",dataM.shape)
     deatail = getDetail(collection)
     if(checkSize(dataM.shape)):
+        objMask = MaskFromText()
+        dataMask = objMask.readCSV("mask_sea_AJ")    
+        dataMask[dataMask == 0] = 2
+        dataMask[dataMask == 1] = 0
+        dataMask[dataMask == 2] = 1
+        print(".............", dataMask.shape)
         regridOBJ = Regrids()
+        seaMask = regridOBJ.regrids(dataMask) 
+        print(".............", seaMask.shape)
+        print(seaMask.shape)
+        seaMask[seaMask>0] = 1
+        print(seaMask.shape)
         dataM = regridOBJ.regrids(dataM)
+        dataM[seaMask == 0] = -99.99
         ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
         deatail["lat_list"] = ulatlon["lat"].tolist()
         deatail["lon_list"] = ulatlon["lon"].tolist()
@@ -129,6 +142,8 @@ def getSeasonalandAVG(type_dataset, yearInit, yearEnd, type_index):
     # SERVICE GET Average Graph Ann
     a = Average_service(ary, collection, month_IE[0], month_IE[1])
     dataA, year  = a.getAverageGraph(0)
+    dataA[np.isnan(dataA)] = np.nanmean(dataA)
+    # print(year)
    
     # regAVG_ann = Linear_regression(dataA)
     # dataTrend_ann = regAVG_ann.predict_linear()
@@ -138,6 +153,7 @@ def getSeasonalandAVG(type_dataset, yearInit, yearEnd, type_index):
     dataS = b.getSeasonal()
     print(dataS)
     # SERVICE GET Average Graph all
+
     c = Average_service(ary, collection, month_IE[0], month_IE[1])
     dataAll, yearAll  = c.getAverageGraph()
 
@@ -145,6 +161,7 @@ def getSeasonalandAVG(type_dataset, yearInit, yearEnd, type_index):
     # dataTrend_all = regAVG_all.predict_linear()
 
     deatail = getDetail(collection)
+    
     month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     # pop lat lon
     deatail.pop('lat_list', None)
@@ -155,10 +172,14 @@ def getSeasonalandAVG(type_dataset, yearInit, yearEnd, type_index):
         dataTrend_all = regAVG_all.predict_linear()
     except:
         dataTrend_all = np.array([])
-
-    regAVG_ann = Linear_regression(dataA)
+    x = dataA[~np.isnan(dataA)]
+    print(x.shape)
+    print(dataA.shape)
+    regAVG_ann = Linear_regression(x)
+    
+    
     dataTrend_ann = regAVG_ann.predict_linear()
-
+    print("Sssss",dataTrend_ann)
 
     return jsonify(
         {
@@ -226,12 +247,30 @@ def getmapPCA(type_dataset, yearInit, yearEnd, type_index):
     deatail = getDetail(collection)
     pca_arr = []
     if(checkSize(pca_eofs[0].shape)):
+        objMask = MaskFromText()
+        dataMask = objMask.readCSV("mask_sea_AJ")    
+        dataMask[dataMask == 0] = 2
+        dataMask[dataMask == 1] = 0
+        dataMask[dataMask == 2] = 1
+        print(".............", dataMask.shape)
+        regridOBJ = Regrids()
+        seaMask = regridOBJ.regrids(dataMask) 
+        print(".............", seaMask.shape)
+        print(seaMask.shape)
+        seaMask[seaMask>0] = 1
+        print(seaMask.shape)
+        # dataM = regridOBJ.regrids(dataM)
+        # dataM[seaMask == 0] = -99.99
+
         regridOBJ = Regrids()
         for i in range(6):
-            pca_arr.append(regridOBJ.regrids(pca_eofs[i]).tolist())
+            dataP = regridOBJ.regrids(pca_eofs[i])
+            dataP[seaMask == 0] = -99.99
+            pca_arr.append(dataP.tolist())
         print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
 
         dataVar = regridOBJ.regrids(dataVar)
+        dataVar[seaMask == 0] = -99.99
         # t = np.array(pca_arr)
         # print(t.shape)
         # print(len(pca_arr[0]))
@@ -285,48 +324,136 @@ def getmapHypoTrend(type_dataset, yearInit, yearEnd, type_index):
         obj = Trend_service(ary, collectionDB, month_IE[0], month_IE[1])
         dataRaw = obj.getData(0)
         print("************************************************************")
-        arr = []
-        regridOBJ = Regrids()
-        for i in range(dataRaw.shape[0]):
-            
-            arr.append(regridOBJ.regrids(dataRaw[i]))
-        arr = np.array(arr)
-        print(arr.shape)
-        print("tempR", arr.shape)
-        if checkSize([arr.shape[1], arr.shape[2]]):
+        
+        print(dataRaw.shape)
+        if checkSize([dataRaw.shape[1], dataRaw.shape[2]]):
+            arr = []
             regridOBJ = Regrids()
+            for i in range(dataRaw.shape[0]):
+                arr.append(regridOBJ.regrids(dataRaw[i]))
+            arr = np.array(arr)
+            print(arr.shape)
+            print("tempR", arr.shape)
+            # regridOBJ = Regrids()
             ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
             deatail["lat_list"] = ulatlon["lat"].tolist()
             deatail["lon_list"] = ulatlon["lon"].tolist()
             print("SSSSS")
+            print("////////////////////////////////////////////////////////////")
+
+            objMask = MaskFromText()
+            dataMask = objMask.readCSV("mask_sea_AJ")    
+            dataMask[dataMask == 0] = 2
+            dataMask[dataMask == 1] = 0
+            dataMask[dataMask == 2] = 1
+            print(".............", dataMask.shape)
+            regridOBJ = Regrids()
+            seaMask = regridOBJ.regrids(dataMask) 
+            print(".............", seaMask.shape)
+            print(seaMask.shape)
+            seaMask[seaMask>0] = 1
+
+            start = time.time()
+            tempR, hypoLat = obj.trendAndHypo(arr)
+            # tempR[seaMask == 0] = -99.99
+            print(time.time() - start)
+            print("SSSSSSSsssssssssSSSsssssSSSSSSSSSsssssssssSSSsssSSSSSS")
+            tempR[tempR == 0] = -99.99
+            print(tempR.shape)
+            obj.insertTomongo(tempR.tolist(),hypoLat.tolist(), collectionDB)
+
+            tempData = tempR.copy()
+            tempHypo = hypoLat.copy()
+            tempData[tempData > 0] = 1
+            tempData[tempData < 0] = -1
+            tempData[tempHypo == 1] = -99.99
+            tempData[seaMask == 0] = -99.99
+            print("tempData")
+            print(tempData)
+
         # ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
         # deatail["lat_list"] = ulatlon["lat"].tolist()
         # deatail["lon_list"] = ulatlon["lon"].tolist()
-
-        print("////////////////////////////////////////////////////////////")
-        start = time.time()
-        tempR, hypoLat = obj.trendAndHypo(dataRaw)
-        print(time.time() - start)
-        print(tempR.shape)
-        print(hypoLat.shape)
-        tempR[tempR == 0] = -99.99
-        obj.insertTomongo(tempR.tolist(),hypoLat.tolist(), collectionDB)
+        else:
+            print("////////////////////////////////////////////////////////////")
+            start = time.time()
+            tempR, hypoLat = obj.trendAndHypo(dataRaw)
+            print(time.time() - start)
+            print(tempR.shape)
+            print(hypoLat.shape)
+            tempR[tempR == 0] = -99.99
+            
+            obj.insertTomongo(tempR.tolist(),hypoLat.tolist(), collectionDB)
+            tempData = tempR.copy()
+            tempHypo = hypoLat.copy()
+            tempData[tempData > 0] = 1
+            tempData[tempData < 0] = -1
+            tempData[tempHypo == 1] = -99.99
     else:
+        print("xxxxxxxxxxxxxxxx")
+        print(tempR.shape)
         if checkSize(tempR.shape):
+            print("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+            objMask = MaskFromText()
+            dataMask = objMask.readCSV("mask_sea_AJ")    
+            dataMask[dataMask == 0] = 2
+            dataMask[dataMask == 1] = 0
+            dataMask[dataMask == 2] = 1
+            print(".............", dataMask.shape)
             regridOBJ = Regrids()
+            seaMask = regridOBJ.regrids(dataMask) 
+            print(".............", seaMask.shape)
+            print(seaMask.shape)
+            seaMask[seaMask>0] = 1
+            
+            tempR[np.isnan(tempR)] = -99.99
+            tempData = tempR.copy()
+            tempHypo = hypoLat.copy()
+            tempData[tempData > 0] = 1
+            tempData[tempData < 0] = -1
+            tempData[tempHypo == 1] = -99.99
+
+
+            # regridOBJ = Regrids()
             ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
             deatail["lat_list"] = ulatlon["lat"].tolist()
             deatail["lon_list"] = ulatlon["lon"].tolist()
             print("SSSSS")
+        else:
+            print("warning :Have data trend in mongo")
+
+            tempR[np.isnan(tempR)] = -99.99
+            tempData = tempR.copy()
+            tempHypo = hypoLat.copy()
+            tempData[tempData > 0] = 1
+            tempData[tempData < 0] = -1
+            tempData[tempHypo == 1] = -99.99
+
+
+            if(type_dataset == "ghcndex" or type_dataset == "hadex2"):
+                pass
+            else:
+                regridOBJ = Regrids()
+                objMask = MaskFromText()
+                dataMask = objMask.readCSV("mask_sea_AJ")    
+                dataMask[dataMask == 0] = 2
+                dataMask[dataMask == 1] = 0
+                dataMask[dataMask == 2] = 1
+                print(".............", dataMask.shape)
+                # regridOBJ = Regrids()
+                seaMask = regridOBJ.regrids(dataMask) 
+                print(".............", seaMask.shape)
+                print(seaMask.shape)
+                seaMask[seaMask>0] = 1
+                ulatlon = regridOBJ.getLatLon_regrid(np.array(deatail["lat_list"]), np.array(deatail["lon_list"]))
+                deatail["lat_list"] = ulatlon["lat"].tolist()
+                deatail["lon_list"] = ulatlon["lon"].tolist()
+                tempData[seaMask == 0] = -99.99
+
             
-        print("warning :Have data trend in mongo")
-        tempR[np.isnan(tempR)] = -99.99
-    
-    tempData = tempR.copy()
-    tempHypo = hypoLat.copy()
-    tempData[tempData > 0] = 1
-    tempData[tempData < 0] = -1
-    tempData[tempHypo == 1] = -99.99
+            print(len(deatail["lat_list"]))
+            print(len(deatail["lon_list"]))
+            
 
     return jsonify(
         {
