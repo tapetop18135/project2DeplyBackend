@@ -226,7 +226,7 @@ for i in files:
     # print(detail)
     
     # break
-    insertTomongo(data,f'dddddddd {dataset.lower()}_{collect.lower()}', detail, aryLatLon, 1970)
+    insertTomongo(data,f'{dataset.lower()}_{collect.lower()}', detail, aryLatLon, 1970)
     # break
 print(arrTemp)
 ############################# TABLE ##########################
