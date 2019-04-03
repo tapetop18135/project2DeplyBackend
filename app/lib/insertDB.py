@@ -184,7 +184,7 @@ compare = {
 # print(arr2hadex2)
 
 ##################################################################
-basepath = "../dataset/netCDF4new/"
+basepath = "../dataset/netCDF4/"
 files = os.listdir(basepath)
 index = 0
 arrTemp = []
