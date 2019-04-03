@@ -230,43 +230,43 @@ compare = {
 #     # break
 # print(arrTemp)
 ############################# TABLE ##########################
-aj = ['cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-a = MongoDB_lc()
-a.collection("dataset")
-a.mongo_insert(
-    [
-        {"haveDataset": ["ghcndex", "hadex2", "ecearth_rcp45", "ecearth_rcp85", "mpi_rcp45", "mpi_rcp85"] },
-    {
-        "ghcndex": {"start": 1951, "stop": 2017,
-        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95pt', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-        }
-    },
-    {
-        "hadex2": {"start": 1951, "stop": 2017,
-        "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
-        }
-    },
-    {
-        "ecearth_rcp45": {"start": 1970, "stop": 2099,
-        "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
-        }
-    },
-    {
-        "ecearth_rcp85": {"start": 1970, "stop": 2099,
-        "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
-        }
-    },
-    {
-        "mpi_rcp45":{"start": 1970, "stop": 2099,
-        "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
-        }
-    },
-    {
-        "mpi_rcp85": {"start": 1970, "stop": 2099,
-        "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
-        }
-    }]
-    )
+# aj = ['cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+# a = MongoDB_lc()
+# a.collection("dataset")
+# a.mongo_insert(
+#     [
+#         {"haveDataset": ["ghcndex", "hadex2", "ecearth_rcp45", "ecearth_rcp85", "mpi_rcp45", "mpi_rcp85"] },
+#     {
+#         "ghcndex": {"start": 1951, "stop": 2017,
+#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95pt', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+#         }
+#     },
+#     {
+#         "hadex2": {"start": 1951, "stop": 2017,
+#         "indexs": ['cdd', 'csdi', 'cwd', 'dtr', 'etr', 'fd', 'gsl', 'id', 'prcptot', 'r10mm', 'r20mm', 'r95ptot', 'r95pt', 'r95p', 'r99ptot', 'r99pt', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
+#         }
+#     },
+#     {
+#         "ecearth_rcp45": {"start": 1970, "stop": 2099,
+#         "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
+#         }
+#     },
+#     {
+#         "ecearth_rcp85": {"start": 1970, "stop": 2099,
+#         "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
+#         }
+#     },
+#     {
+#         "mpi_rcp45":{"start": 1970, "stop": 2099,
+#         "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
+#         }
+#     },
+#     {
+#         "mpi_rcp85": {"start": 1970, "stop": 2099,
+#         "indexs": ['txx', 'csdi', 'fd0', 'rx1day', 'cwd', 'r10mm']
+#         }
+#     }]
+#     )
 
 
 ############################################################
