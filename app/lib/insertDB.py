@@ -184,51 +184,51 @@ compare = {
 # print(arr2hadex2)
 
 ##################################################################
-# basepath = "../dataset/netCDF4new/"
-# files = os.listdir(basepath)
-# index = 0
-# arrTemp = []
-# month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-# for i in files:
-#     name = i.split(".")
-#     # print(name)
-#     collect = name[0].split("_")[2]
-#     dataset = f'{name[0].split("_")[0]}_{name[0].split("_")[1]}'
-#     # print(collect)
-#     # arrTemp.append(collect.lower())
-#     # continue
-#     # print(collect)
-#     # print(dataset)
-#     data, aryLatLon = get_data(f"{basepath}{i}")
-#     # print(data)
-#     # print(aryLatLon)
-#     # break
-#     if(collect in compare):
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": compare[collect][0], # Max Tmax
-#             "type_measure": compare[collect][1], # temperature
-#             "method": compare[collect][2], # intensity
-#             "unit": compare[collect][3], # °C def
-#             "description": compare[collect][4], # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     else:
-#         detail = {
-#             "index_name": collect, # TXx
-#             "short_name": None, # Max Tmax
-#             "type_measure": None, # temperature
-#             "method": None, # intensity
-#             "unit": None, # °C def
-#             "description": None, # °C def
-#             "dataset": dataset, # ghcendex
-#         }
-#     # print(detail)
+basepath = "../dataset/netCDF4new/"
+files = os.listdir(basepath)
+index = 0
+arrTemp = []
+month = ['Ann','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+for i in files:
+    name = i.split(".")
+    # print(name)
+    collect = name[0].split("_")[2]
+    dataset = f'{name[0].split("_")[0]}_{name[0].split("_")[1]}'
+    # print(collect)
+    # arrTemp.append(collect.lower())
+    # continue
+    # print(collect)
+    # print(dataset)
+    data, aryLatLon = get_data(f"{basepath}{i}")
+    # print(data)
+    # print(aryLatLon)
+    # break
+    if(collect in compare):
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": compare[collect][0], # Max Tmax
+            "type_measure": compare[collect][1], # temperature
+            "method": compare[collect][2], # intensity
+            "unit": compare[collect][3], # °C def
+            "description": compare[collect][4], # °C def
+            "dataset": dataset, # ghcendex
+        }
+    else:
+        detail = {
+            "index_name": collect, # TXx
+            "short_name": None, # Max Tmax
+            "type_measure": None, # temperature
+            "method": None, # intensity
+            "unit": None, # °C def
+            "description": None, # °C def
+            "dataset": dataset, # ghcendex
+        }
+    # print(detail)
     
-#     # break
-#     insertTomongo(data,f'dddddddd {dataset.lower()}_{collect.lower()}', detail, aryLatLon, 1970)
-#     # break
-# print(arrTemp)
+    # break
+    insertTomongo(data,f'dddddddd {dataset.lower()}_{collect.lower()}', detail, aryLatLon, 1970)
+    # break
+print(arrTemp)
 ############################# TABLE ##########################
 # aj = ['cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi', 'cdd', 'csdi', 'cwd', 'dtr', 'fd0', 'fd16', 'id0', 'prcptot', 'r10mm', 'r20mm', 'r25mm', 'r95p', 'r99p', 'rx1day', 'rx5day', 'sdii', 'su25', 'su35', 'tmaxmean', 'tminmean', 'tn10p', 'tn90p', 'tnn', 'tnx', 'tr20', 'tr25', 'trend', 'tx10p', 'tx90p', 'txn', 'txx', 'wsdi']
 # a = MongoDB_lc()
